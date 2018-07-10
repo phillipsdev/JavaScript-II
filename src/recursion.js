@@ -18,6 +18,21 @@ const nFactorial = (n) => {
 const checkMatchingLeaves = (obj) => {
   // return true if every property on `obj` is the same
   // otherwise return false
+  const simpl = (input) => {
+    if (Object(input) !== input) return input;
+    const keys = Object.keys(input);
+    const first = input[keys[0]];
+    return Object(first) === first ? simpl(first) : first;
+  };
+
+  const keys = Object.keys(obj);
+  const first = obj[keys[0]];
+  for (let i = 0; i < keys.length; i++) {
+    const current = obj[keys[i]];
+    if (Object(current) === current && !checkMatchingLeaves(current)) return false;
+    if (simpl(current) !== simpl(first)) return false;
+  }
+  return true;
 };
 
 /* eslint-enable no-unused-vars */
